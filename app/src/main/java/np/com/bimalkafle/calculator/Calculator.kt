@@ -75,10 +75,10 @@ fun Calculator(modifier: Modifier = Modifier){
 
 @Composable
 fun CalculatorButton(btn : String) {
-    Box(modifier = Modifier.padding(8.dp)){
+    Box(modifier = Modifier.padding(10.dp)){
         FloatingActionButton(
             onClick = { },
-            modifier = Modifier.size(80.dp),
+            modifier = Modifier.size(70.dp),
             shape = CircleShape,
             contentColor = Color.White,
             containerColor = getColor(btn)
