@@ -1,9 +1,12 @@
 package np.com.bimalkafle.calculator
 
+import android.content.Context
+import android.media.audiofx.Equalizer
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.mozilla.javascript.Scriptable
 
 class CalculatorViewModel : ViewModel(){
 
@@ -17,13 +20,13 @@ class CalculatorViewModel : ViewModel(){
         Log.i("Clicked Button", btn)
 
         _equationText.value?.let {
-            if (btn=="AC"){
+            if (btn == "AC"){
                 _equationText.value =""
                 _resultText.value ="0"
                 return
             }
 
-            if(btn=="c"){
+            if(btn == "C"){
                 if(it.isNotEmpty()){
                     _equationText.value = it.substring(0,it.length-1)
                     return
@@ -37,7 +40,14 @@ class CalculatorViewModel : ViewModel(){
 
             _equationText.value = it+btn
 
-            Log.i("Equation",_equationText.value.toString())
+
+        }
+
+        fun calculateResult(equation : String) : String{
+            val context : org.mozilla.javascript.Context = org.mozilla.javascript.Context.enter()
+            context.optimizationLevel = -1
+            val scriptable : Scriptable = context.initStandardObjects()
+            context.evaluateString(scriptable,equation,"Javascript",1,null)
 
         }
     }
